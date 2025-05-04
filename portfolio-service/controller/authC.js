@@ -1,6 +1,7 @@
 const User = require('../models/userM')
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
+// const { uploadPic } = require('../upload/profilePic');
 
 const checkConnection = (req, res) => {
     console.log("Check connection called")
@@ -10,6 +11,7 @@ const checkConnection = (req, res) => {
 const registerUser = async (req, res) => {
     try {
         console.log("Register user called", req.body);
+        // console.log("Register user file", req.file);
 
         // Check if user already exists
         const existingUser = await User.findOne({ email: req.body.email });
@@ -21,6 +23,17 @@ const registerUser = async (req, res) => {
         if (req.body.password !== req.body.confirmPassword) {
             return res.status(400).json({ msg: "Password and Confirm Password do not match" });
         }
+
+        // let filePath = null;
+        // uploadPic(req, res, async (err) => {
+        //     if (err) {
+        //         return res.status(400).json({ msg: err.message });
+        //     } else {
+        //         // File uploaded successfully, get the file path
+        //         filePath = req.file.path;
+        //         console.log("File path:", filePath);
+        //     }
+        // })
 
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         
@@ -38,6 +51,8 @@ const registerUser = async (req, res) => {
                 country: req.body.address?.country,
                 zip: req.body.address?.zip,
             },
+            // profilePic: req?.file?.path,
+            // photoPath: filePath,
             password: User.hashPassword(req.body.password),
             ipaddress: ip,
         });
@@ -118,7 +133,7 @@ const loginUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find({}, '-password'); // exclude password
+        const users = await User.find({}, '-password -_id -createdAt -updatedAt -__v'); // exclude password
         res.status(200).json({ users });
     } catch (err) {
         res.status(500).json({ msg: 'Server error' });

@@ -48,6 +48,16 @@ const userSchema = new mongoose.Schema({
             required: true,
         },
     },
+    // profilePic: {
+    //     type: String,
+    //     required: true,
+    //     validate: {
+    //         validator: function (v) {
+    //             return /\.(jpg|jpeg|png|gif)$/.test(v);
+    //         },
+    //         message: props => `${props.value} is not a valid image URL!`
+    //     }
+    // },
     password: {
         type: String,
         match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$/, 'Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character'],
