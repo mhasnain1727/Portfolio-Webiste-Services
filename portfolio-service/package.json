@@ -4,9 +4,10 @@
   "description": "portfolio-web-services",
   "main": "server.js",
   "scripts": {
+    "dev": "ts-node-dev --respawn server.js",
     "start": "nodemon server.js",
-    "build": "ts-node-dev --respawn server.js",
-    "test": "npm test"
+    "test": "npm test",
+    "build": "tsc"
   },
   "author": "hasnain",
   "license": "ISC",
