@@ -4,14 +4,18 @@ const cors = require('cors');
 const db = require('./db/connectionSetup');
 const bodyParser = require('body-parser');
 const app = express();
+const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 3000;
 
 
 const startServer = async () => {
     try {
         await db();
-        app.use(cors());
+        app.use(cors({ origin: 'http://localhost:4200', credentials: true })); //Add credentials true for cookie
+        // app.use(cors({ origin: true, credentials: true })); // Allow all origins with credentials
+
         app.use(bodyParser.json());
+        app.use(cookieParser());
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use('/api', require('./routes/userR'));
         

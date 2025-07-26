@@ -18,35 +18,43 @@ const userSchema = new mongoose.Schema({
         match: [/^\d{10}$/, "Phone must be 10 digits"],
         required: [true, 'Phone must be provided'],
     },
-    address: {
-        addressLine1: {
-            type: String,
-            required: true,
-        },
-        addressLine2: {
-            type: String,
-            required: false,
-        },
-        street: {
-            type: String,
-            required: true,
-        },
-        city: {
-            type: String,
-            required: true,
-        },
-        state: {
-            type: String,
-            required: true,
-        },
-        country: {
-            type: String,
-            required: true,
-        },
-        zip: {
-            type: String,
-            required: true,
-        },
+    // address: {
+    //     addressLine1: {
+    //         type: String,
+    //         required: true,
+    //     },
+    //     addressLine2: {
+    //         type: String,
+    //         required: false,
+    //     },
+    //     street: {
+    //         type: String,
+    //         required: true,
+    //     },
+    //     city: {
+    //         type: String,
+    //         required: true,
+    //     },
+    //     state: {
+    //         type: String,
+    //         required: true,
+    //     },
+    //     country: {
+    //         type: String,
+    //         required: true,
+    //     },
+    //     zip: {
+    //         type: String,
+    //         required: true,
+    //     },
+    // },
+    userType: {
+        type: String,
+        required: true,
+    },
+    photo: {
+        type: String, // Store base64 string
+        required: false,
     },
     password: {
         type: String,
@@ -60,6 +68,29 @@ const userSchema = new mongoose.Schema({
     // lastLogin: {
     //     type: Date
     // },
+
+    // // for single device
+    // refreshToken: {
+    //     type: String,
+    //     default: null,
+    // }
+
+    // for multiple device
+    // refreshTokens: {
+    //     type: [String],
+    //     default: [],
+    // },
+    refreshTokens: {
+        type: [
+            {
+                token: String,
+                device: String,
+                ipAddress: String,
+                createdAt: { type: Date, default: Date.now }
+            }
+        ],
+        default: [],
+    }
 }, { timestamps: true });
 
 
