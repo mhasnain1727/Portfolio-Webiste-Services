@@ -6,7 +6,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 3000;
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 
 const startServer = async () => {
     try {
@@ -19,6 +20,9 @@ const startServer = async () => {
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use('/api', require('./routes/userR'));
         
+        // setupSwagger(app);
+        app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
         app.listen(PORT, () => {
         console.log(`Portfolio service running on port ${PORT}`);
         });
