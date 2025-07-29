@@ -246,8 +246,15 @@ const logoutUser = async (req, res) => {
 
 
 const getAllUsers = async (req, res) => {
+    const { userType } = req.query;
+    if (!userType) {
+        return res.status(400).json({ msg: 'User type is required' });
+    }
     try {
-        const users = await User.find({}, '-password'); // exclude password
+        const filter = userType && userType !== 'all' ? { userType } : {};
+        console.log("Filter:", filter);
+        // const users = await User.find({ userType: 'student' }, '-password'); // exclude password
+        const users = await User.find(filter, '-password, -refreshTokens'); // exclude password
         res.status(200).json({ users });
     } catch (err) {
         res.status(500).json({ msg: 'Server error' });

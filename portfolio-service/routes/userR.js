@@ -60,6 +60,7 @@ router.get('/check', checkConnection);
  */
 
 /**
+ * 
  * @swagger
  * /login:
  *   post:
@@ -139,21 +140,6 @@ router.get('/check', checkConnection);
 
 /**
  * @swagger
- * /getAllUsers:
- *   get:
- *     summary: Get all users (Admin use)
- *     tags: [Admin]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: List of users
- *       401:
- *         description: Unauthorized
- */
-
-/**
- * @swagger
  * /getActiveSessions:
  *   get:
  *     summary: Get active sessions for the user
@@ -188,6 +174,25 @@ router.get('/check', checkConnection);
  *       404:
  *         description: Session not found
  */
+
+
+
+// ADMIN
+/**
+ * @swagger
+ * /getAllUsers:
+ *   get:
+ *     summary: Get all users (Admin use)
+ *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of users
+ *       401:
+ *         description: Unauthorized
+ */
+
 
 router.post('/registerUser', registerUser);
 
