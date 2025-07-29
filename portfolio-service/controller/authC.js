@@ -252,7 +252,6 @@ const getAllUsers = async (req, res) => {
     }
     try {
         const filter = userType && userType !== 'all' ? { userType } : {};
-        console.log("Filter:", filter);
         // const users = await User.find({ userType: 'student' }, '-password'); // exclude password
         const users = await User.find(filter, '-password, -refreshTokens'); // exclude password
         res.status(200).json({ users });
